@@ -31,12 +31,13 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get('/book', 'Book::index');
-$routes->get('/book/create', 'Book::create');
-$routes->post('/book/create', 'Book::create');
-$routes->get('/book/edit/(:num)', 'Book::edit/$1');//use number to pass the id
-$routes->post('/book/edit/(:num)', 'Book::edit/$1');
-$routes->get('/book/delete/(:num)', 'Book::delete/$1');//delete 
+// CRUD RESTful Routes
+$routes->get('users-list', 'UserCrud::index');
+$routes->get('user-form', 'UserCrud::create');
+$routes->post('submit-form', 'UserCrud::store');
+$routes->get('edit_view/(:num)', 'UserCrud::singleUser/$1');
+$routes->post('update', 'UserCrud::update');
+$routes->get('delete/(:num)', 'UserCrud::delete/$1');
 
 /*
  * --------------------------------------------------------------------

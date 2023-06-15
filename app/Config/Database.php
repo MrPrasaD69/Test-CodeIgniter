@@ -29,7 +29,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => '',
-        'database' => 'prasaddb',
+        'database' => 'user',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
