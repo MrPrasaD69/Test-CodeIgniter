@@ -34,22 +34,7 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-12">
-                <?php //Error Message showcase
-                    if(!empty($session->getFlashdata('success'))){
-                        ?>
-                        <div class="alert alert-success">
-                            <?php echo $session->getFlashdata('success'); ?>
-                        </div>
-                        <?php
-                    }
-                    if(!empty($session->getFlashdata('error'))){
-                        ?>
-                        <div class="alert alert-danger">
-                            <?php echo $session->getFlashdata('error'); ?>
-                        </div>
-                        <?php
-                    }
-                ?>
+            
             </div>
             <div class="col-md-12">
                 <div class="card">
@@ -61,8 +46,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Title</th>
-                                    <th>No</th>
                                     <th>Author</th>
+                                    <th>No</th>
+                                    <th>Genre</th>    
                                     <th>Action</th>
                                 </tr>
                                 
@@ -74,6 +60,7 @@
                                     <td><?php echo $book['title'] ?></td>
                                     <td><?php echo $book['author'] ?></td>
                                     <td><?php echo $book['isbno'] ?></td>
+                                    <td><?php echo $book['genre'] ?></td>
                                     <td><a href="<?php echo base_url("book/edit/".$book['id']); ?>" class="btn btn-success btn-sm m-1 1">Edit</a><a class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo $book['id'] ?>')">Delete</a></td>
                                 </tr>
                                 <?php } 

@@ -1,23 +1,34 @@
 <?php
 namespace App\Controllers;
 use App\Models\BookModel;
+use App\Models\GenreModel;
 
 class Book extends BaseController{
     public function index(){
         $session= \Config\Services::session();
         $data['session']=$session;
 
+        
+        $bookmodel=new BookModel();
+        $data=[
+            'books'=>$bookmodel->select("books.id,books.title,books.author,books.isbno,books.genre_id,tbl_genre.genre,tbl_genre.genre_id")->join('tbl_genre','tbl_genre.genre_id=books.genre_id')->findAll(),
+        ];
+        return view("books/List",$data);
+        
+       
 
+        /*
         //use the model's object and call it's function
         $model=new BookModel();
         $booksArray=$model->getRecords();
         $data['books']=$booksArray; //$data variable will pass our array data to the view
         
-        echo view("books/List",$data); //pass the session data to view
-
+        echo view("books/List",$data); //pass the session data to view 
+        */
         
     }
 
+    //Create method to insert data
     public function create(){
         $data=[];
         $session= \Config\Services::session();
@@ -27,21 +38,25 @@ class Book extends BaseController{
         if($this->request->getMethod()=='post'){
             $input=$this->validate([
                 "title"=>'required|min_length[5]',
-                "author"=>'required|min_length[5]'
+                "author"=>'required|min_length[5]',
+                "isbno"=>'required'
             ]);
 
-            //After input validation comes true
+            //When input validation comes true, proceed to save
             if($input){
                 $model=new BookModel;
                 $model->save([
                     "title"=>$this->request->getPost('title'),
                     "author"=>$this->request->getPost('author'),
                     "isbno"=>$this->request->getPost('isbno'),
+                    "genre_id"=>$this->request->getPost('genrename'),
                 ]);
                 $session->setFlashdata('success','Data Added');
                 return redirect()->to("/book");
             }
-            else{
+            else
+            {
+                //when input is incorrect, throw validation
                 $data["validation"]=$this->validator;
             }
         }
@@ -71,7 +86,8 @@ class Book extends BaseController{
         if($this->request->getMethod()=='post'){
             $input=$this->validate([
                 "title"=>'required|min_length[5]',
-                "author"=>'required|min_length[5]'
+                "author"=>'required|min_length[5]',
+                "isbno"=>'required'
             ]);
 
             //After input validation comes true
@@ -90,6 +106,7 @@ class Book extends BaseController{
                     return redirect()->to("/book");
             }
             else{
+                //when input is incorrect, throw validation
                 $data["validation"]=$this->validator;
             }
         }
